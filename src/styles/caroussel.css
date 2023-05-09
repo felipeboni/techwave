@@ -1,0 +1,83 @@
+@keyframes float {
+    0% {
+        transform: translateY(0%);
+    }
+    50% {
+        transform: translateY(5%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+.swiper-slide {
+    height: 350px !important;
+    border-radius: 1rem;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.swiper-pagination {
+    left: 100px !important;
+    width: max-content !important;
+    bottom: 50px !important;
+}
+
+.swiper-pagination-bullet {
+    background-color: #fff !important;
+    opacity: 100% !important;
+    border-radius: 999px !important;
+    width: 8px !important;
+    transition: width 300ms ease !important;
+}
+
+.swiper-pagination-bullet-active {
+    width: 20px !important;
+}
+
+.headline {
+    @apply absolute;
+    left: 100px;
+    top: 60px;
+    @apply flex;
+    @apply flex-col;
+    @apply text-white;
+    @apply gap-3;
+}
+
+.headline .title {
+    @apply text-7xl;
+    @apply font-semibold;
+}
+
+.headline .subtitle {
+    @apply text-2xl;
+}
+
+.slider-smartwatch {
+    position: absolute;
+    right: 150px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-bottom: -50%;
+    height: 100%;
+}
+
+.slider-smartwatch::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 40px;
+    height: 10px;
+    width: 50%;
+    transform: translateX(-50%);
+    border-radius: 100%;
+    background-color: black;
+    filter: blur(10px);
+}
+
+.slider-smartwatch img {
+    animation: float 2s ease infinite;
+}
