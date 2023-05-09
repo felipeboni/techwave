@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Select from "react-select";
 
-const TopBar = () => {
+export default function TopBar() {
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
@@ -151,5 +151,3 @@ const TopBar = () => {
     </div>
   );
 };
-
-export { TopBar };
