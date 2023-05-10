@@ -1,0 +1,68 @@
+.line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    margin-bottom: auto;
+}
+
+.old-price {
+    text-decoration-line: line-through;
+    opacity: 50%;
+}
+
+.card {
+    max-height: 320px;
+    height: 100%;
+    transform: scale(1);
+    transition: all 100ms ease;
+    background-color: white;
+}
+
+.card .discount-tag {
+    right: 0;
+    top: 0;
+    line-height: 1 !important;
+    border-top-right-radius: 0.6rem;
+    border-bottom-left-radius: 0.6rem;
+    height: 48px;
+    width: 48px;
+}
+
+.card:hover {
+    border-color: rgb(14, 165, 233);
+    transform: scale(1.05);
+}
+
+.card .info {
+    padding: 1rem;
+    padding-bottom: 0.7rem;
+}
+
+.card .info .stars {
+    opacity: 50%;
+}
+
+.card .info svg {
+    fill: #facc15;
+    stroke: none;
+}
+
+.card .info h3 {
+    color: rgb(34 197 94);
+}
+
+.card .info hr {
+    border-top-width: 2px;
+}
+
+.card .thumb {
+    max-height: 50%;
+    padding: 1rem;
+}
+
+.card .thumb img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}

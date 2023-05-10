@@ -8,14 +8,17 @@ import ProductCard from "@/modules/product";
 
 export default function Index({ children }) {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
-      .get(
-        `https://api.apify.com/v2/acts/junglee~free-amazon-product-scraper/runs/last/dataset/items?token=${process.env.NEXT_PUBLIC_APIFY_TOKEN}`
-      )
+      .get("/data/list.json")
       .then((res) => setProducts(res.data));
   }, []);
+
+  useEffect(() => {
+    products.length > 0 && setLoading(false);
+  }, [products]);
 
   return (
     <div className="max-w-[1400px] mx-auto px-8">
@@ -26,8 +29,8 @@ export default function Index({ children }) {
       <div className="mt-12">
         <div className="flex items-center justify-between py-3 border-b-2 border-sky-100/50">
           <div className="relative text-xl font-semibold w-max after:absolute after:bottom-[-13px] after:rounded-full after:left-0 after:h-1 after:bg-sky-500 after:w-full">
-            <span className="text-slate-500">Grab the best deal on </span>
-            <span className="text-sky-500">Smartphones</span>
+            <span className="text-slate-500">Grab the </span>
+            <span className="text-sky-500">Best deals</span>
           </div>
 
           <button className="flex items-center justify-center gap-1">
@@ -39,8 +42,13 @@ export default function Index({ children }) {
         </div>
       </div>
 
-      <div className="grid gap-3 grid-cols-[repeat(auto-fill,230px)] min-h-[300px] max-h-[300px] mt-12">
-        {products.length > 0 && <ProductCard props={products[0]} />}
+      <div className="grid gap-5 justify-start items-center grid-cols-[repeat(auto-fill,250px)] min-h-[300px] max-h-[300px] mt-12">
+        {loading
+          ? [...Array(5)].map((x, i) => <span></span>)
+          : [...Array(5)].map(
+              (x, i) =>
+                products[i] && <ProductCard key={i} props={products[i]} />
+            )}
       </div>
     </div>
   );
