@@ -13,7 +13,7 @@ export default function Index({ children }) {
   useEffect(() => {
     axios
       .get("/data/list.json")
-      .then((res) => setProducts(res.data));
+      .then((res) => setTimeout(() => setProducts(res.data), 3000));
   }, []);
 
   useEffect(() => {
@@ -23,7 +23,11 @@ export default function Index({ children }) {
   return (
     <div className="max-w-[1400px] mx-auto px-8">
       <div className="mt-12 z-[0] relative">
-        <Caroussel />
+        {loading ? (
+          <div className="w-full bg-slate-300 h-[350px] rounded-xl animate-pulse"></div>
+        ) : (
+          <Caroussel />
+        )}
       </div>
 
       <div className="mt-12">
@@ -44,7 +48,9 @@ export default function Index({ children }) {
 
       <div className="grid gap-5 justify-start items-center grid-cols-[repeat(auto-fill,250px)] min-h-[300px] max-h-[300px] mt-12">
         {loading
-          ? [...Array(5)].map((x, i) => <span></span>)
+          ? [...Array(5)].map((x, i) => (
+              <div className="w-full h-full animate-pulse rounded-xl bg-slate-300"></div>
+            ))
           : [...Array(5)].map(
               (x, i) =>
                 products[i] && <ProductCard key={i} props={products[i]} />

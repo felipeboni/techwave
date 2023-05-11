@@ -1,11 +1,23 @@
+import { useState, useEffect } from "react";
 import { Search, User, ShoppingCart } from "react-feather";
 
 export default function NavBar() {
+  const [basePath, setBasePath] = useState("");
+
+  useEffect(() => {
+    setBasePath(window.location.origin);
+  }, []);
+
   return (
     <div className="h-[90px] border-b-2 border-sky-100/50">
       <div className="max-w-[1400px] px-8 h-full mx-auto flex items-center justify-between">
         <div className="max-w-[180px] w-full">
-          <img src="./logos/Logo - Full - Blue.svg" className="w-full h-full" />
+          <a href={basePath}>
+            <img
+              src={`${basePath}/logos/Logo - Full - Blue.svg`}
+              className="w-full h-full"
+            />
+          </a>
         </div>
 
         <div className="flex justify-between w-1/2 gap-5">
