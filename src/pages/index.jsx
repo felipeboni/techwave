@@ -49,7 +49,7 @@ export default function Index({ children }) {
       <div className="grid gap-5 justify-start items-center grid-cols-[repeat(auto-fill,250px)] min-h-[300px] max-h-[300px] mt-12">
         {loading
           ? [...Array(5)].map((x, i) => (
-              <div className="w-full h-full animate-pulse rounded-xl bg-slate-300"></div>
+              <div key={i} className="w-full h-full animate-pulse rounded-xl bg-slate-300"></div>
             ))
           : [...Array(5)].map(
               (x, i) =>
