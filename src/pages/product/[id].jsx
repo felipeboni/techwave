@@ -227,8 +227,8 @@ export default function Product({ asin }) {
               </h6>
 
               <ul className="flex flex-col gap-5 text-sm font-semibold list-disc text-slate-500">
-                {product.features.map((feature) => (
-                  <li>{feature}</li>
+                {product.features.map((feature, i) => (
+                  <li key={i}>{feature}</li>
                 ))}
               </ul>
             </div>
