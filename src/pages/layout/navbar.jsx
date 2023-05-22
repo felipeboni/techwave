@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
-import { Search, User, ShoppingCart } from "react-feather";
+import { Search, User, ShoppingCart, LogOut } from "react-feather";
+
+import { useSession, signIn, signOut } from "next-auth/react";
+import Link from "next/link";
 
 export default function NavBar() {
+  const { data: session } = useSession();
   const [basePath, setBasePath] = useState("");
 
   useEffect(() => {
@@ -12,12 +16,12 @@ export default function NavBar() {
     <div className="h-[90px] border-b-2 border-sky-100/50">
       <div className="max-w-[1400px] px-8 h-full mx-auto flex items-center justify-between">
         <div className="max-w-[180px] w-full">
-          <a href={basePath}>
+          <Link href="/">
             <img
               src={`${basePath}/logos/Logo - Full - Blue.svg`}
               className="w-full h-full"
             />
-          </a>
+          </Link>
         </div>
 
         <div className="flex justify-between w-1/2 gap-5">
@@ -43,11 +47,38 @@ export default function NavBar() {
           </form>
 
           <div className="flex items-center justify-center gap-4">
-            <button className="flex items-center justify-center gap-2">
-              <User className="w-4 h-4 text-sky-500" />
+            {session ? (
+              <button className="relative flex items-center justify-center gap-2 group">
+                <User className="w-4 h-4 text-sky-500" />
 
-              <span className="font-semibold text-slate-500">Sign In</span>
-            </button>
+                <span className="font-semibold text-slate-500">
+                  Hello,{" "}
+                  <span className="text-sky-500">{session.user.username}!</span>
+                </span>
+
+                <div className="absolute z-[999] rounded-lg left-1/2 -translate-x-1/2 right-0 p-4 bg-white shadow-lg shadow-sky-900/10 top-6 invisible group-hover:visible w-36">
+                  <button
+                    onClick={() => signOut()}
+                    className="relative flex items-center justify-center gap-2"
+                  >
+                    <LogOut className="w-4 h-4 text-sky-500" />
+
+                    <span className="font-semibold text-slate-500">
+                      Sign out
+                    </span>
+                  </button>
+                </div>
+              </button>
+            ) : (
+              <button
+                onClick={() => signIn()}
+                className="flex items-center justify-center gap-2"
+              >
+                <User className="w-4 h-4 text-sky-500" />
+
+                <span className="font-semibold text-slate-500">Sign In</span>
+              </button>
+            )}
 
             <div className="w-px h-4 bg-slate-500/20"></div>
 

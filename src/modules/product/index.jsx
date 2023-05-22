@@ -1,19 +1,28 @@
 import { Star } from "react-feather";
+import { useRouter } from 'next/router';
 
 export default function ProductCard({ props }) {
-  console.log(props);
-
   const diff = props.listPrice && props.listPrice.value - props.price.value;
-
+  const router = useRouter();
+  
   return (
     <a
-      href={`/product/${props.asin}`}
-      className="relative flex flex-col flex-1 bg-white border-2 card rounded-xl border-sky-100/50"
+      onClick={() =>
+        router.push(`/product/${props.asin}`, undefined, {
+          shallow: true,
+        })
+      }
+      className="relative flex flex-col flex-1 bg-white border-2 cursor-pointer card rounded-xl border-sky-100/50"
     >
       {diff && (
         <div className="absolute flex flex-col items-center justify-center p-2 text-sm text-white bg-sky-500 discount-tag">
           <span>
-            {Math.trunc(((props.listPrice.value - props.price.value) / (props.listPrice.value))  * 100)}%
+            {Math.trunc(
+              ((props.listPrice.value - props.price.value) /
+                props.listPrice.value) *
+                100
+            )}
+            %
           </span>
           <span>OFF</span>
         </div>
@@ -29,8 +38,8 @@ export default function ProductCard({ props }) {
         <div className="flex items-center justify-between">
           <div className="flex gap-3">
             <h2>
-              {props.price.currency}
-              {props.price.value.toFixed(2)}
+              {props.price?.currency}
+              {props.price?.value.toFixed(2)}
             </h2>
             {diff && (
               <h2 className="old-price">
