@@ -105,10 +105,10 @@ export default function Index({ children }) {
               : categories.map((category, i) => (
                   <a
                     href="#"
+                    key={`${i}__category`}
                     className="flex flex-col items-center justify-center gap-3"
                   >
                     <div
-                      key={`${i}__category`}
                       className={`w-[150px] h-[150px] mx-auto rounded-full aspect-square bg-slate-300 bg-[url(/categories/mobiles.png)] bg-center bg-contain bg-no-repeat`}
                     />
                     <span className="text-sm font-semibold text-slate-500">
