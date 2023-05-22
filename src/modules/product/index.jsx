@@ -29,7 +29,7 @@ export default function ProductCard({ props }) {
       )}
 
       <div className="flex-1 w-full thumb">
-        <img src={props.thumbnailImage} alt="" />
+        <img src={props.thumbnailImage} alt={`Photo of ${props.title}`} />
       </div>
 
       <div className="flex flex-col flex-1 gap-2 font-semibold info text-slate-500">
