@@ -46,7 +46,7 @@ export default function CartPage() {
         <div className="relative flex w-full gap-8 p-6">
           <div className="flex flex-col w-[75%]">
             {cart.map((item) => (
-              <div className="flex flex-row justify-between w-full gap-8 p-4 border-t-2">
+              <div key={`product__${item.asin}`} className="flex flex-row justify-between w-full gap-8 p-4 border-t-2">
                 <div
                   className="h-[200px] bg-white bg-center bg-contain bg-no-repeat w-44"
                   style={{
