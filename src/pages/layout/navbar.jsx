@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
-import { Search, User, ShoppingCart, LogOut } from "react-feather";
+import { Search, User, ShoppingBag, LogOut } from "react-feather";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 
+import { useSelector } from "react-redux";
+
 export default function NavBar() {
   const { data: session } = useSession();
   const [basePath, setBasePath] = useState("");
+
+  const cart = useSelector((state) => state.cart);
+
+  const getItemsCount = () => {
+    return cart.reduce((accumulator, item) => accumulator + item.quantity, 0);
+  };
 
   useEffect(() => {
     setBasePath(window.location.origin);
@@ -48,45 +56,73 @@ export default function NavBar() {
 
           <div className="flex items-center justify-center gap-4">
             {session ? (
-              <button className="relative flex items-center justify-center gap-2 group">
-                <User className="w-4 h-4 text-sky-500" />
+              <>
+                <button className="relative flex items-center justify-center gap-2 group">
+                  <User className="w-4 h-4 text-sky-500" />
 
-                <span className="font-semibold text-slate-500">
-                  Hello,{" "}
-                  <span className="text-sky-500">{session.user.username}!</span>
-                </span>
-
-                <div className="absolute z-[999] rounded-lg left-1/2 -translate-x-1/2 right-0 p-4 bg-white shadow-lg shadow-sky-900/10 top-6 invisible group-hover:visible w-36">
-                  <button
-                    onClick={() => signOut()}
-                    className="relative flex items-center justify-center gap-2"
-                  >
-                    <LogOut className="w-4 h-4 text-sky-500" />
-
-                    <span className="font-semibold text-slate-500">
-                      Sign out
+                  <span className="font-semibold text-slate-500">
+                    Hello,{" "}
+                    <span className="text-sky-500">
+                      {session.user.username}!
                     </span>
-                  </button>
-                </div>
-              </button>
+                  </span>
+                </button>
+
+                <div className="w-px h-4 bg-slate-500/20"></div>
+
+                <button
+                  onClick={() => signOut()}
+                  className="relative flex items-center justify-center gap-2"
+                >
+                  <LogOut className="w-4 h-4 text-sky-500" />
+
+                  <span className="font-semibold text-slate-500">Sign out</span>
+                </button>
+
+                <div className="w-px h-4 bg-slate-500/20"></div>
+
+                <Link
+                  href="/cart"
+                  className="relative flex items-center justify-center gap-2"
+                >
+                  <ShoppingBag className="w-4 h-4 text-sky-500" />
+                  {getItemsCount() > 0 && (
+                    <span className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -left-3 -top-2 aspect-square">
+                      {getItemsCount()}
+                    </span>
+                  )}
+
+                  <span className="font-semibold text-slate-500">Cart</span>
+                </Link>
+              </>
             ) : (
-              <button
-                onClick={() => signIn()}
-                className="flex items-center justify-center gap-2"
-              >
-                <User className="w-4 h-4 text-sky-500" />
+              <>
+                <button
+                  onClick={() => signIn()}
+                  className="flex items-center justify-center gap-2"
+                >
+                  <User className="w-4 h-4 text-sky-500" />
 
-                <span className="font-semibold text-slate-500">Sign In</span>
-              </button>
+                  <span className="font-semibold text-slate-500">Sign In</span>
+                </button>
+
+                <div className="w-px h-4 bg-slate-500/20"></div>
+
+                <button
+                  onClick={() => signIn()}
+                  className="relative flex items-center justify-center gap-2"
+                >
+                  <ShoppingBag className="w-4 h-4 text-sky-500" />
+                  {getItemsCount() > 0 && (
+                    <span className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -left-3 -top-2 aspect-square">
+                      {getItemsCount()}
+                    </span>
+                  )}
+
+                  <span className="font-semibold text-slate-500">Cart</span>
+                </button>
+              </>
             )}
-
-            <div className="w-px h-4 bg-slate-500/20"></div>
-
-            <button className="flex items-center justify-center gap-2">
-              <ShoppingCart className="w-4 h-4 text-sky-500" />
-
-              <span className="font-semibold text-slate-500">Cart</span>
-            </button>
           </div>
         </div>
       </div>

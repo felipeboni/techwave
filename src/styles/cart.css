@@ -1,0 +1,25 @@
+table.cart {
+    @apply rounded-lg;
+    @apply border-2;
+    border-collapse: separate;
+}
+
+table.cart td {
+    @apply p-4;
+}
+
+table.cart thead td {
+    @apply font-bold;
+    @apply border-b-2;
+    @apply text-slate-500/50;
+    border-collapse: separate;
+}
+
+table.cart thead tr td {
+    @apply p-4;
+}
+
+table.cart tbody tr td {
+    @apply font-bold;
+    @apply text-slate-500;
+}

@@ -20,16 +20,10 @@ export default function Index({ children }) {
     "Earbuds",
   ];
 
-  const brands = [
-    "apple",
-    "realme",
-    "xiaomi"
-  ];
+  const brands = ["apple", "realme", "xiaomi"];
 
   useEffect(() => {
-    axios
-      .get("/data/list.json")
-      .then((res) => setProducts(_.shuffle(res.data)));
+    axios.get("/api/products").then((res) => setProducts(res.data));
   }, []);
 
   useEffect(() => {
@@ -148,7 +142,10 @@ export default function Index({ children }) {
                     className="w-full bg-cover h-max rounded-xl bg-repeat-norepeat"
                     style={{ backgroundImage: `url(./brands/bg_${brand}.svg)` }}
                   >
-                    <img src={`./brands/${brand}.png`} className="object-contain object-center px-2 pt-2 mx-auto" />
+                    <img
+                      src={`./brands/${brand}.png`}
+                      className="object-contain object-center px-2 pt-2 mx-auto"
+                    />
                   </div>
                 ))}
           </div>

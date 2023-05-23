@@ -7,7 +7,12 @@ import ProductCard from "@/modules/product";
 import { useSession, signIn } from "next-auth/react";
 import _ from "lodash";
 
+import { toast } from "react-toastify";
+
 import { useRouter } from "next/router";
+
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../redux/cart.slice';
 
 export default function Product() {
   const { data: session } = useSession();
@@ -17,21 +22,24 @@ export default function Product() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    axios
-      .get("/data/list.json")
-      .then((res) => setProducts(_.shuffle(res.data)));
+    axios.get("/api/products").then((res) => setProducts(res.data));
   }, []);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [product]);
 
   useEffect(() => {
     if (products.length == 0) return;
 
     setLoading(true);
 
-    const thisProduct = _.find(products, { asin: router.query.id });
-
-    setProduct(thisProduct);
-    setLoading(false);
+    axios
+      .get(`/api/products/${router.query.id}`)
+      .then((res) => setProduct(res.data));
   }, [products, router.asPath]);
 
   return (
@@ -113,6 +121,10 @@ export default function Product() {
               {session ? (
                 <>
                   <button
+                    onClick={() => {
+                      dispatch(addToCart(product))
+                      toast.success("Product added to cart!");
+                    }}
                     disabled={!product.inStock}
                     className="flex-1 p-3 font-semibold text-white rounded-xl bg-sky-500"
                   >
@@ -120,6 +132,7 @@ export default function Product() {
                   </button>
 
                   <button
+                    onClick={() => dispatch(addToCart(product))}
                     disabled={!product.inStock}
                     className="p-3 font-semibold text-sky-500 rounded-xl bg-sky-200"
                   >
@@ -184,7 +197,7 @@ export default function Product() {
           </div>
         </div>
 
-        {product ? (
+        {product && !loading ? (
           <div className="flex gap-5 p-10">
             <div className="flex-1 max-w-[80%] pr-64">
               <div className="flex mb-10 font-semibold text-slate-500">
