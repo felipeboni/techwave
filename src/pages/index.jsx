@@ -40,7 +40,7 @@ export default function Index({ children }) {
         )}
       </div>
 
-      <div className="flex flex-col gap-20">
+      <div className="flex flex-col gap-20 mb-40">
         <div>
           <div className="flex items-center justify-between py-3 border-b-2 border-sky-100/50">
             <div className="relative text-xl font-semibold w-max after:absolute after:bottom-[-13px] after:rounded-full after:left-0 after:h-1 after:bg-sky-500 after:w-full">
